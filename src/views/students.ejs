@@ -1,0 +1,158 @@
+<% layout('layout') %>
+<h1>Student Management</h1>
+
+<!-- Add Student Button -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addStudentModal">
+    Add New Student
+</button>
+
+<!-- Helper Function to Get Status Class -->
+<% function getStatusClass(status) {
+    switch (status) {
+        case 'Inquiry': return 'badge bg-primary status-badge';
+        case 'Demo In': return 'badge bg-secondary status-badge';
+        case 'Demo Drop': return 'badge bg-warning text-dark status-badge';
+        case 'Admission': return 'badge bg-success status-badge';
+        case 'Cancel Admission': return 'badge bg-info text-dark status-badge';
+        default: return 'badge bg-light text-dark status-badge';
+    }
+} %>
+
+<!-- Student Table -->
+<table class="table mt-4">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Admission Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% students.forEach(student => { %>
+            <tr>
+                <td><%= student.firstName %></td>
+                <td><%= student.lastName %></td>
+                <td>
+                    <span class="<%= getStatusClass(student.status) %>"><%= student.status %></span>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editStudentModal" 
+                            data-id="<%= student._id %>" 
+                            data-firstname="<%= student.firstName %>"
+                            data-lastname="<%= student.lastName %>"
+                            data-status="<%= student.status %>">
+                        Edit
+                    </button>
+                </td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>
+
+<!-- Add Student Modal -->
+<div class="modal fade" id="addStudentModal" tabindex="-1" aria-labelledby="addStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="/admin/students" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addStudentModalLabel">Add New Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" class="form-control" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Admission Status:</label>
+                        <select class="form-control" id="status" name="status">
+                            <option value="Inquiry">Inquiry</option>
+                            <option value="Demo In">Demo In</option>
+                            <option value="Demo Drop">Demo Drop</option>
+                            <option value="Admission">Admission</option>
+                            <option value="Cancel Admission">Cancel Admission</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Student Modal -->
+<div class="modal fade" id="editStudentModal" tabindex="-1" aria-labelledby="editStudentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="editStudentForm" action="" method="POST">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editStudentModalLabel">Edit Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="editFirstName">First Name:</label>
+                        <input type="text" class="form-control" id="editFirstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editLastName">Last Name:</label>
+                        <input type="text" class="form-control" id="editLastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="editStatus">Admission Status:</label>
+                        <select class="form-control" id="editStatus" name="status">
+                            <option value="Inquiry">Inquiry</option>
+                            <option value="Demo In">Demo In</option>
+                            <option value="Demo Drop">Demo Drop</option>
+                            <option value="Admission">Admission</option>
+                            <option value="Cancel Admission">Cancel Admission</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Update Student</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .status-badge {
+        font-size: 1rem; 
+        padding: 0.35em 0.65em; 
+    }
+</style>
+
+<script>
+    // Script to handle edit button click and populate modal with data
+    const editStudentModal = document.getElementById('editStudentModal');
+    editStudentModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const id = button.getAttribute('data-id');
+        const firstName = button.getAttribute('data-firstname');
+        const lastName = button.getAttribute('data-lastname');
+        const status = button.getAttribute('data-status');
+
+        const modalTitle = editStudentModal.querySelector('.modal-title');
+        const modalForm = editStudentModal.querySelector('#editStudentForm');
+        const modalFirstName = editStudentModal.querySelector('#editFirstName');
+        const modalLastName = editStudentModal.querySelector('#editLastName');
+        const modalStatus = editStudentModal.querySelector('#editStatus');
+
+        modalTitle.textContent = `Edit Student: ${firstName} ${lastName}`;
+        modalForm.action = `/admin/students/${id}/update`;
+        modalFirstName.value = firstName;
+        modalLastName.value = lastName;
+        modalStatus.value = status;
+    });
+</script>

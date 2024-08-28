@@ -1,0 +1,56 @@
+<% layout('layout') %>
+<div class="container">
+    <h1 class="text-center my-4">Dashboard</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-primary" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h3 class="card-title text-center fs-4 fw-bold">Inquiry</h3>
+                    <p class="card-text text-center fs-5"><%= inquieryStudents %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-secondary" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h3 class="card-title text-center fs-4 fw-bold">In Demo</h3>
+                    <p class="card-text text-center fs-5"><%= demoStudents %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-danger" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h3 class="card-title text-center fs-4 fw-bold">Drop Demo</h3>
+                    <p class="card-text text-center fs-5"><%= dropStudents %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-success" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h3 class="card-title text-center fs-4 fw-bold">Admission</h3>
+                    <p class="card-text text-center fs-5"><%= admissionStudents %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-warning" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h3 class="card-title text-center fs-4 fw-bold">Cancel Admission</h3>
+                    <p class="card-text text-center fs-5"><%= cancelAdmission %></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card text-white bg-info" style="border-radius: 1rem;">
+                <div class="card-body p-3">
+                    <h3 class="card-title text-center fs-4 fw-bold">Total Students</h3>
+                    <p class="card-text text-center fs-5"><%= totalStudents %></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,9 @@
+<% layout('layout') %>
+<div class="container">
+    <ul>
+        <li><%= user.firstName %></li>
+        <li><%= user.lastName %></li>
+        <li><%= user.email %></li>
+        <li> <img src="http://localhost:4001/<%= user.profileImage || 'public/images/defualt.jpg' %>" alt="User Profile"> </li>
+    </ul>
+</div>
